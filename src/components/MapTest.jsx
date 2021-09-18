@@ -1,20 +1,21 @@
-import React from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import React, { useMemo } from "react";
+import { HeatmapLayer } from "@react-google-maps/api";
 
+import Map from "./Map";
 import use911Data from "../hooks/use911Data";
-
-const containerStyle = {
-  width: "400px",
-  height: "400px",
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523,
-};
+import useMapsApi from "../hooks/useMapsApi";
 
 const MapTest = () => {
   const { isLoading, error, data } = use911Data();
+  const { maps } = useMapsApi();
+  const heatMapData = useMemo(() => {
+    if (data && maps) {
+      return data.map(
+        ({ latitude, longitude }) => new maps.LatLng(latitude, longitude)
+      );
+    }
+    return [];
+  }, [data, maps]);
   if (isLoading) {
     return "loading...";
   }
@@ -25,20 +26,16 @@ const MapTest = () => {
   return (
     <>
       <h1>Placeholders</h1>
+      <h2>Map Placeholder</h2>
+      <Map>
+        <HeatmapLayer data={heatMapData} />
+      </Map>
       <h2>Data Pull Example</h2>
       <pre style={{ background: "#ccc" }}>
         {isLoading && "...loading..."}
         {error && "something went wrong"}
         {JSON.stringify(data, null, 2)}
       </pre>
-      <h2>Map Placeholder</h2>
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-        ></GoogleMap>
-      </LoadScript>
     </>
   );
 };
