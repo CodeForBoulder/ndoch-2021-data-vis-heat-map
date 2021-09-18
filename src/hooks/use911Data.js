@@ -8,7 +8,7 @@ const use911Data = () => {
     async () => {
       const response = await dataWorldClient.post("/911-psap-data", {
         query:
-          "SELECT latitude, longitude FROM ny_2021_nypd_calls_for_service LIMIT 10",
+          "SELECT latitude, longitude FROM ny_2021_nypd_calls_for_service LIMIT 20",
       });
       return response.data;
     },
