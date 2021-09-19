@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: `https://api.data.world/v0/sql/${process.env.REACT_APP_DATA_WORLD_USERNAME}`,
+  baseURL: "https://api.data.world/",
   timeout: 5000,
   headers: {
     Accept: "application/json",
