@@ -4,8 +4,9 @@ import { GoogleMap } from "@react-google-maps/api";
 import useMapsApi from "../hooks/useMapsApi";
 
 const containerStyle = {
-  width: "100%",
-  height: "400px",
+  flexGrow: 1,
+  flexShrink: 1,
+  flexBasis: "100%",
 };
 
 const newYorkCenter = {
